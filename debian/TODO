@@ -3,15 +3,13 @@ What needs to be done before we can upload this to sid:
    E: voctomix-gui: python-script-but-no-python-dep usr/share/voctomix/voctogui/voctogui.py
    E: voctomix-core: python-script-but-no-python-dep usr/share/voctomix/voctocore/voctocore.py
  * Improve long package descriptions.
- * Review depends for the -core and -gui package.
- * Actually test this package!
- * This is not 0.2 but rather 0.2 + (currently) 23 patches from the master
-   branch. Let's hope upstream does a new release soon.
  * h01ger cannot maintain this alone. Please speak up if you want to help!
    h01ger is happy to sponsor uploads though.
 
 What could be done:
  * automate creating the orig.tar.xz though this should be coordinated with
-   upstream. Currently this command can be used to create it:
-   git archive --format tar.gz --prefix=voctomix-0.2.orig/ -o ../voctomix_0.2.orig.tar.gz origin/master
-
+   upstream. Currently these commands can be used to create it:
+   VERSION=0.3
+   git archive --format tar.gz --prefix=voctomix-$VERSION.orig/ -o ../voctomix_0.3.orig.tar.gz origin/master
+   gunzip ../voctomix_$VERSION.orig.tar.gz
+   xz ../voctomix_$VERSION.orig.tar

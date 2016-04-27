@@ -20,6 +20,9 @@ override_dh_auto_install:
 	cp -r voctogui/default-config.ini voctogui/voctogui.py voctogui/ui voctogui/lib $(CURDIR)/debian/voctomix-gui/usr/share/voctomix/voctogui/
 	ln -s /usr/share/voctomix/voctogui/voctogui.py $(CURDIR)/debian/voctomix-gui/usr/bin/voctogui
 
+override_dh_python3:
+	#
+
 override_dh_clean:
 	dh_clean
 	rm -f voctomix.html voctocore.html voctogui.html debian/debhelper-build-stamp

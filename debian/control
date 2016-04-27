@@ -31,13 +31,20 @@ Description: Full-HD Software Live-Video-Mixer
 Package: voctomix-core
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends},
+ python3,
  python3-gi,
- gir1.2-gstreamer-1.0 (>=1.8.1-1~),
- gstreamer1.0-plugins-bad (>=1.8.0-1~),
- gstreamer1.0-plugins-base (>=1.8.1-1~),
- gstreamer1.0-plugins-good (>=1.8.1-1~),
- gstreamer1.0-plugins-ugly (>=1.8.1-1~),
+ gir1.2-gstreamer-1.0,
+ gir1.2-gst-plugins-base-1.0,
+ libgstreamer1.0-0 (>=1.8.1~),
+ gstreamer1.0-plugins-bad,
+ gstreamer1.0-plugins-base,
+ gstreamer1.0-plugins-good,
+ gstreamer1.0-plugins-ugly,
  gstreamer1.0-tools
+Suggests: python3-pyinotify,
+ gstreamer1.0-libav,
+ rlwrap,
+ fbset
 Description: Full-HD Software Live-Video-Mixer (Core)
  The Voctomix Project consists of three parts:
   - Voctocore, the videomixer core-process that does the actual video- and
@@ -54,11 +61,20 @@ Description: Full-HD Software Live-Video-Mixer (Core)
 Package: voctomix-gui
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends},
+ python3,
+ python3-gi,
  python3-gi-cairo,
- gstreamer1.0-alsa,
- gir1.2-gtk-3.0,
+ gir1.2-gstreamer-1.0,
  gir1.2-gst-plugins-base-1.0,
- gir1.2-gst-plugins-bad-1.0
+ gir1.2-gtk-3.0,
+ libgstreamer1.0-0 (>=1.8.1~),
+ gstreamer1.0-plugins-bad,
+ gstreamer1.0-plugins-base,
+ gstreamer1.0-plugins-good,
+ gstreamer1.0-plugins-ugly,
+ gstreamer1.0-alsa,
+ gstreamer1.0-tools
+Suggests: gstreamer1.0-libav
 Description: Full-HD Software Live-Video-Mixer (GUI)
  The Voctomix Project consists of three parts:
   - Voctocore, the videomixer core-process that does the actual video- and
