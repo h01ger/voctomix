@@ -15,15 +15,16 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends},
  voctomix-core,
  voctomix-gui
 Description: Full-HD Software Live-Video-Mixer
- The Voctomix Project consists of three parts:
+ The Voctomix Project by the C3Voc (the Chaos Communication Congress' Video
+ Operation Crew) is their software implementation of a Live-Video-Mixer.
+ .
+ It is written in Python using GStreamer and consists of three parts:
   - Voctocore, the videomixer core-process that does the actual video- and
     audio crunching
   - Voctogui, a GUI implementation in GTK controlling the core's functionality
     and giving visual feedback of the mixed video
   - Voctotools (not yet implemented), a collection of tools and examples on how
     to talk to the core-process, feeding and receiving video-streams
- .
- Voctomix is written in Python using GStreamer by the CCC VOC.
  .
  This package depends on all the components and also contains the
  documentation.
@@ -46,17 +47,11 @@ Suggests: python3-pyinotify,
  rlwrap,
  fbset
 Description: Full-HD Software Live-Video-Mixer (Core)
- The Voctomix Project consists of three parts:
-  - Voctocore, the videomixer core-process that does the actual video- and
-    audio crunching
-  - Voctogui, a GUI implementation in GTK controlling the core's functionality
-    and giving visual feedback of the mixed video
-  - Voctotools (not yet implemented), a collection of tools and examples on how
-    to talk to the core-process, feeding and receiving video-streams
+ The Voctomix Project by the C3Voc (the Chaos Communication Congress' Video
+ Operation Crew) is their software implementation of a Live-Video-Mixer.
  .
- Voctomix is written in Python using GStreamer by the CCC VOC.
- .
- This package contains the Core component.
+ This package contains the core component, Voctocore, the videomixer
+ core-process that does the actual video- and audio crunching.
 
 Package: voctomix-gui
 Architecture: all
@@ -76,15 +71,9 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends},
  gstreamer1.0-tools
 Suggests: gstreamer1.0-libav
 Description: Full-HD Software Live-Video-Mixer (GUI)
- The Voctomix Project consists of three parts:
-  - Voctocore, the videomixer core-process that does the actual video- and
-    audio crunching
-  - Voctogui, a GUI implementation in GTK controlling the core's functionality
-    and giving visual feedback of the mixed video
-  - Voctotools (not yet implemented), a collection of tools and examples on how
-    to talk to the core-process, feeding and receiving video-streams
+ The Voctomix Project by the C3Voc (the Chaos Communication Congress' Video
+ Operation Crew) is their software implementation of a Live-Video-Mixer.
  .
- Voctomix is written in Python using GStreamer by the CCC VOC.
- .
- This package contains the GUI component.
+ This package contains the GUI component, Voctogui, a GUI implementation in
+ GTK controlling the core's functionality.
 
