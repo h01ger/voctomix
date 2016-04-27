@@ -4,4 +4,23 @@
 # #export DH_VERBOSE=1
 #
 %:
-	dh $@ --with python2
+	dh $@ --with python3
+
+override_dh_auto_build:
+	pandoc -o voctomix.html README.md
+	pandoc -o voctocore.html voctocore/README.md
+	pandoc -o voctogui.html voctogui/README.md
+
+override_dh_auto_install:
+	dh_auto_install
+	# voctomix-core
+	cp -r voctocore/lib $(CURDIR)/debian/voctomix-core/usr/share/voctomix/voctocore/
+	ln -s /usr/share/voctomix/voctocore/voctocore.py $(CURDIR)/debian/voctomix-core/usr/bin/voctocore
+	# voctomix-gui
+	cp -r voctogui/ui voctogui/lib $(CURDIR)/debian/voctomix-gui/usr/share/voctomix/voctogui/
+	ln -s /usr/share/voctomix/voctogui/voctogui.py $(CURDIR)/debian/voctomix-gui/usr/bin/voctogui
+
+override_dh_clean:
+	dh_clean
+	rm -f voctomix.html voctocore.html voctogui.html debian/debhelper-build-stamp
+

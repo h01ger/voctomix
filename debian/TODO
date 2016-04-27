@@ -1,0 +1,5 @@
+What needs to be done before we can upload this to sid:
+* improve long package descriptions
+* vocto(core|ui)/default-config.ini ain't shipped yet
+* actually test this package
+* I definitly don't want to maintain this. I'm happy to sponsor uploads though ;)
