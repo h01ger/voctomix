@@ -14,10 +14,10 @@ override_dh_auto_build:
 override_dh_auto_install:
 	dh_auto_install
 	# voctomix-core
-	cp -r voctocore/lib $(CURDIR)/debian/voctomix-core/usr/share/voctomix/voctocore/
+	cp -r voctocore/voctocore.py voctocore/lib $(CURDIR)/debian/voctomix-core/usr/share/voctomix/voctocore/
 	ln -s /usr/share/voctomix/voctocore/voctocore.py $(CURDIR)/debian/voctomix-core/usr/bin/voctocore
 	# voctomix-gui
-	cp -r voctogui/ui voctogui/lib $(CURDIR)/debian/voctomix-gui/usr/share/voctomix/voctogui/
+	cp -r voctogui/voctogui.py voctogui/ui voctogui/lib $(CURDIR)/debian/voctomix-gui/usr/share/voctomix/voctogui/
 	ln -s /usr/share/voctomix/voctogui/voctogui.py $(CURDIR)/debian/voctomix-gui/usr/bin/voctogui
 
 override_dh_clean:

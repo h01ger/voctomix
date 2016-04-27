@@ -3,3 +3,8 @@ What needs to be done before we can upload this to sid:
 * vocto(core|ui)/default-config.ini ain't shipped yet
 * actually test this package
 * I definitly don't want to maintain this. I'm happy to sponsor uploads though ;)
+
+What could be done:
+* automate creating the orig.tar.xz though this should be coordinated with upstream
+** "easy" command line to do so: git archive --format tar.gz --prefix=voctomix-0.2.orig/ -o ../voctomix_0.2.orig.tar.gz origin/master
+
