@@ -21,14 +21,15 @@ Description: Full-HD Software Live-Video-Mixer
  .
  It is written in Python using GStreamer and consists of three parts:
   - Voctocore, the videomixer core-process that does the actual video- and
-    audio crunching
+    audio crunching.
   - Voctogui, a GUI implementation in GTK controlling the core's functionality
-    and giving visual feedback of the mixed video
-  - Voctotools (not yet implemented), a collection of tools and examples on how
-    to talk to the core-process, feeding and receiving video-streams
+    and giving visual feedback of the mixed video.
+  - Voctomix Example Scripts, a collection of tools and examples for talking
+    to the core-process, feeding and receiving video-streams and controlling
+    operations from scripts or command-line.
  .
  This package depends on all the components and also contains the
- documentation.
+ documentation and example scripts.
 
 Package: voctomix-core
 Architecture: all
