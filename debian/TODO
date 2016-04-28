@@ -4,6 +4,8 @@ What needs to be done before we can upload this to sid:
    E: voctomix-core: python-script-but-no-python-dep usr/share/voctomix/voctocore/voctocore.py
  * h01ger cannot maintain this alone. Please speak up if you want to help!
    h01ger is happy to sponsor uploads though.
+   -> file an RFH bug once the package is in the archive. (h01ger)
+   -> consider helping maintaining voctomix in Debian. (you)
 
 What could be done:
  * automate creating the orig.tar.xz though this should be coordinated with
@@ -12,3 +14,5 @@ What could be done:
    git archive --format tar.gz --prefix=voctomix-$VERSION.orig/ -o ../voctomix_0.3.orig.tar.gz origin/master
    gunzip ../voctomix_$VERSION.orig.tar.gz
    xz ../voctomix_$VERSION.orig.tar
+ * Not sure whether this should go into a new upstream Makefile or simply
+   become a make-orig-tar-xz target…

@@ -20,6 +20,11 @@ override_dh_auto_install:
 	cp -r voctogui/default-config.ini voctogui/voctogui.py voctogui/ui voctogui/lib $(CURDIR)/debian/voctomix-gui/usr/share/voctomix/voctogui/
 	ln -s /usr/share/voctomix/voctogui/voctogui.py $(CURDIR)/debian/voctomix-gui/usr/bin/voctogui
 
+override_dh_installdocs:
+	dh_installdocs
+	# don't ship TODO (and don't intercept failure so we notice once the file is gone)
+	rm $(CURDIR)/debian/voctomix/usr/share/doc/voctomix/TODO.Debian
+
 override_dh_python3:
 	#
 
