@@ -1,3 +1,12 @@
+voctomix (0.3.1-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * reduce gstreamer version requirement to 1.6.1, which allows one
+    to run it on jessie using gstreamer from c3voc.de, as seen here:
+    http://anonscm.debian.org/cgit/debconf-video/config.git/tree/doc/dc16_voctomix_installation_notes.md
+
+ -- Philip Hands <phil@hands.com>  Thu, 30 Jun 2016 10:24:34 +0200
+
 voctomix (0.3.1-1) unstable; urgency=medium
 
   * Initial release. (Closes: #822805)
