@@ -1,6 +1,11 @@
 voctomix (0.3.1-2) UNRELEASED; urgency=medium
 
   * Acknowledge NMU, thanks Phil.
+  * Move the depends on gstreamer1.0-tools and the suggests on fbset,
+    python3-pyinotify, gstreamer1.0-libav and rlwrap from the voctomix-core
+    package to the voctomix package, as they are only needed to run some of
+    the scripts and examples from the voctomix package. Thanks to Peter Körner
+    for the  bugreport! (Closes: #834296)
 
  -- Holger Levsen <holger@debian.org>  Sun, 14 Aug 2016 12:20:08 +0200
 

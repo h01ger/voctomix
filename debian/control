@@ -14,7 +14,12 @@ Package: voctomix
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends},
  voctomix-core,
- voctomix-gui
+ voctomix-gui,
+ gstreamer1.0-tools
+Suggests: python3-pyinotify,
+ gstreamer1.0-libav,
+ rlwrap,
+ fbset
 Description: Full-HD Software Live-Video-Mixer
  The Voctomix Project by the C3Voc (the Chaos Communication Congress' Video
  Operation Crew) is their software implementation of a Live-Video-Mixer.
@@ -41,12 +46,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends},
  gstreamer1.0-plugins-bad,
  gstreamer1.0-plugins-base,
  gstreamer1.0-plugins-good,
- gstreamer1.0-plugins-ugly,
- gstreamer1.0-tools
-Suggests: python3-pyinotify,
- gstreamer1.0-libav,
- rlwrap,
- fbset
+ gstreamer1.0-plugins-ugly
 Description: Full-HD Software Live-Video-Mixer (Core)
  The Voctomix Project by the C3Voc (the Chaos Communication Congress' Video
  Operation Crew) is their software implementation of a Live-Video-Mixer.
