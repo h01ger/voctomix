@@ -1,8 +1,8 @@
-voctomix (0.4-1) UNRELEASED; urgency=medium
+voctomix (0.4-1) unstable; urgency=medium
 
   * New upstream version.
 
- -- Holger Levsen <holger@debian.org>  Sun, 18 Sep 2016 11:34:52 +0200
+ -- Holger Levsen <holger@debian.org>  Sun, 18 Sep 2016 11:38:13 +0200
 
 voctomix (0.3.1-2) unstable; urgency=medium
 
