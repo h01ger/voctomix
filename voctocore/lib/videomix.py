@@ -150,30 +150,43 @@ class VideoMix(object):
 		targetWidth = int((width - gutter) / 2)
 		targetHeight = int(targetWidth / width * height)
 
-		try:
-			y = Config.getint('side-by-side-equal', 'ypos')
-			self.log.debug('Y-Pos configured to %u', y)
-		except:
-			y = (height - targetHeight) / 2
-			self.log.debug('Y-Pos calculated to %u', y)
+		self.log.debug('Video-Size calculated to %ux%u', targetWidth, targetHeight)
 
 		xa = 0
 		xb = width - targetWidth
+		y = (height - targetHeight) / 2
+
+		try:
+			ya = Config.getint('side-by-side-equal', 'atop')
+			self.log.debug('A-Video Y-Pos configured to %u', ya)
+		except:
+			ya = y
+			self.log.debug('A-Video Y-Pos calculated to %u', ya)
+
+
+		try:
+			yb = Config.getint('side-by-side-equal', 'btop')
+			self.log.debug('B-Video Y-Pos configured to %u', yb)
+		except:
+			yb = y
+			self.log.debug('B-Video Y-Pos calculated to %u', yb)
+
 
 		for idx, name in enumerate(self.names):
 			pad = self.padState[idx]
 			pad.reset()
 
-			pad.ypos = y
 			pad.width = targetWidth
 			pad.height = targetHeight
 
 			if idx == self.sourceA:
 				pad.xpos = xa
+				pad.ypos = ya
 				pad.zorder = 1
 
 			elif idx == self.sourceB:
 				pad.xpos = xb
+				pad.ypos = yb
 				pad.zorder = 2
 
 			else:
@@ -296,6 +309,31 @@ class VideoMix(object):
 			mixerpad.set_property('alpha', state.alpha)
 			mixerpad.set_property('zorder', state.zorder)
 
+	def selectCompositeModeDefaultSources(self):
+		sectionNames = {
+			CompositeModes.fullscreen: 'fullscreen',
+			CompositeModes.side_by_side_equal: 'side-by-side-equal',
+			CompositeModes.side_by_side_preview: 'side-by-side-preview',
+			CompositeModes.picture_in_picture: 'picture-in-picture'
+		}
+
+		compositeModeName = self.compositeMode.name
+		sectionName = sectionNames[self.compositeMode]
+
+		try:
+			defSource = Config.get(sectionName, 'default-a')
+			self.setVideoSourceA(self.names.index(defSource))
+			self.log.info('Changing sourceA to default of Mode %s: %s', compositeModeName, defSource)
+		except Exception as e:
+			pass
+
+		try:
+			defSource = Config.get(sectionName, 'default-b')
+			self.setVideoSourceB(self.names.index(defSource))
+			self.log.info('Changing sourceB to default of Mode %s: %s', compositeModeName, defSource)
+		except Exception as e:
+			pass
+
 	def on_handoff(self, object, buffer):
 		if self.padStateDirty:
 			self.padStateDirty = False
@@ -335,6 +373,8 @@ class VideoMix(object):
 
 	def setCompositeMode(self, mode):
 		self.compositeMode = mode
+
+		self.selectCompositeModeDefaultSources()
 		self.recalculateMixerState()
 
 	def getCompositeMode(self):
