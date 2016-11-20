@@ -1,2 +1,2 @@
 debian/voctogui.desktop /usr/share/applications
-debian/missing-cat.svg /usr/share/icons/hicolor/scalable/apps/voctogui.svg
+debian/voctogui.svg /usr/share/icons/hicolor/scalable/apps/

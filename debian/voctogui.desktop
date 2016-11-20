@@ -6,4 +6,4 @@ Path=/usr/bin
 Type=Application
 Terminal=false
 Name=VoctoGUI
-Categories=Multimedia;
+Categories=AudioVideo;

@@ -42,9 +42,9 @@ License: GPL-2+
  On Debian systems, the complete text of the GNU General
  Public License version 2 can be found in "/usr/share/common-licenses/GPL-2".
 
-Files: debian/missing-cat.svg
+Files: debian/voctogui.svg
 Copyright: 2014 MaZderMind <peter@mazdermind.de>
-License: CC0 / PD
+License: CC0/PublicDomain
  No Copyright
  .
  The person who associated a work with this deed has dedicated the work to the
