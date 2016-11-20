@@ -1,3 +1,11 @@
+voctomix (0.4-2) UNRELEASED; urgency=medium
+
+  * Add .desktop file for voctogui. (Closes:  #845044)
+  * Add missing-cat.svg to debian/copyright. It was taken from
+    https://github.com/voc/streaming-website/blob/master/assets/img/
+
+ -- Holger Levsen <holger@debian.org>  Sun, 20 Nov 2016 13:46:32 +0100
+
 voctomix (0.4-1) unstable; urgency=medium
 
   * New upstream version.

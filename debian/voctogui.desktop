@@ -1,0 +1,9 @@
+[Desktop Entry]
+GenericName=VoctoGUI
+Exec=/usr/bin/voctogui
+Icon=voctomix-gui
+Path=/usr/bin
+Type=Application
+Terminal=false
+Name=VoctoGUI
+Categories=Multimedia;
