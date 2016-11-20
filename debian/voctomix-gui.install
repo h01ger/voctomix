@@ -1,2 +1,6 @@
+voctogui/default-config.ini /usr/share/voctomix/voctogui/
+voctogui/voctogui.py /usr/share/voctomix/voctogui/
+voctogui/ui /usr/share/voctomix/voctogui/
+voctogui/lib /usr/share/voctomix/voctogui/
 debian/voctogui.desktop /usr/share/applications
 debian/voctogui.svg /usr/share/icons/hicolor/scalable/apps/

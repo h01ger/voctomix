@@ -4,6 +4,8 @@ voctomix (0.4-2) UNRELEASED; urgency=medium
   * Use debian/voctogui.svg (renamed and taken from missing-cat.svg from
     https://github.com/voc/streaming-website/blob/master/assets/img/)
     for the desktop icon.
+  * Use debian/*.install and debian/*.links files instead of using cp and ln
+    in debian/rules.
 
  -- Holger Levsen <holger@debian.org>  Sun, 20 Nov 2016 13:46:32 +0100
 

@@ -1,0 +1,3 @@
+voctocore/default-config.ini /usr/share/voctomix/voctocore/
+voctocore/voctocore.py /usr/share/voctomix/voctocore/
+voctocore/lib /usr/share/voctomix/voctocore/

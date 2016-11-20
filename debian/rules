@@ -11,15 +11,6 @@ override_dh_auto_build:
 	pandoc -o voctocore.html voctocore/README.md
 	pandoc -o voctogui.html voctogui/README.md
 
-override_dh_auto_install:
-	dh_auto_install
-	# voctomix-core
-	cp -r voctocore/default-config.ini voctocore/voctocore.py voctocore/lib $(CURDIR)/debian/voctomix-core/usr/share/voctomix/voctocore/
-	ln -s /usr/share/voctomix/voctocore/voctocore.py $(CURDIR)/debian/voctomix-core/usr/bin/voctocore
-	# voctomix-gui
-	cp -r voctogui/default-config.ini voctogui/voctogui.py voctogui/ui voctogui/lib $(CURDIR)/debian/voctomix-gui/usr/share/voctomix/voctogui/
-	ln -s /usr/share/voctomix/voctogui/voctogui.py $(CURDIR)/debian/voctomix-gui/usr/bin/voctogui
-
 override_dh_installdocs:
 	dh_installdocs
 	# don't ship TODO (and don't intercept failure so we notice once the file is gone)
