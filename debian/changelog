@@ -1,4 +1,4 @@
-voctomix (0.4-2) UNRELEASED; urgency=medium
+voctomix (0.4-2) unstable; urgency=medium
 
   * Add .desktop file for voctogui. (Closes:  #845044)
   * Use debian/voctogui.svg (renamed and taken from missing-cat.svg from
@@ -7,7 +7,7 @@ voctomix (0.4-2) UNRELEASED; urgency=medium
   * Use debian/*.install and debian/*.links files instead of using cp and ln
     in debian/rules.
 
- -- Holger Levsen <holger@debian.org>  Sun, 20 Nov 2016 13:46:32 +0100
+ -- Holger Levsen <holger@debian.org>  Sun, 20 Nov 2016 14:51:12 +0100
 
 voctomix (0.4-1) unstable; urgency=medium
 
