@@ -1,8 +1,8 @@
-voctomix (0.4-3) UNRELEASED; urgency=medium
+voctomix (0.4-3) unstable; urgency=medium
 
   * debian/rules: add new-upstream-version target, remove debian/TODO.
 
- -- Holger Levsen <holger@debian.org>  Mon, 21 Nov 2016 02:02:32 +0100
+ -- Holger Levsen <holger@debian.org>  Mon, 21 Nov 2016 02:05:09 +0100
 
 voctomix (0.4-2) unstable; urgency=medium
 
