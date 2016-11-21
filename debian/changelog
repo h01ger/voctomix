@@ -3,7 +3,7 @@ voctomix (0.4-2) unstable; urgency=medium
   * Add .desktop file for voctogui. (Closes:  #845044)
   * Use debian/voctogui.svg (renamed and taken from missing-cat.svg from
     https://github.com/voc/streaming-website/blob/master/assets/img/)
-    for the desktop icon.
+    for the desktop icon. Update debian/copyright accordingly.
   * Use debian/*.install and debian/*.links files instead of using cp and ln
     in debian/rules.
 
