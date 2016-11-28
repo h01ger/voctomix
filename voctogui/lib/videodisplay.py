@@ -1,155 +1,175 @@
 import logging
 from gi.repository import Gst
 
+from lib.args import Args
 from lib.config import Config
 from lib.clock import Clock
 
+
 class VideoDisplay(object):
-	""" Displays a Voctomix-Video-Stream into a GtkWidget """
+    """Displays a Voctomix-Video-Stream into a GtkWidget"""
 
-	def __init__(self, drawing_area, port, width=None, height=None, play_audio=False, level_callback=None):
-		self.log = logging.getLogger('VideoDisplay[%u]' % port)
+    def __init__(self, drawing_area, port, width=None, height=None,
+                 play_audio=False, level_callback=None):
+        self.log = logging.getLogger('VideoDisplay[%u]' % port)
 
-		self.drawing_area = drawing_area
-		self.level_callback = level_callback
+        self.drawing_area = drawing_area
+        self.level_callback = level_callback
 
-		caps = Config.get('mix', 'videocaps')
-		use_previews = Config.getboolean('previews', 'enabled') and Config.getboolean('previews', 'use')
+        if Config.has_option('previews', 'videocaps'):
+            previewcaps = Config.get('previews', 'videocaps')
+        else:
+            previewcaps = Config.get('mix', 'videocaps')
 
-		# Preview-Ports are Raw-Ports + 1000
-		if use_previews:
-			self.log.info('using jpeg-previews instead of raw-video for gui')
-			port += 1000
-		else:
-			self.log.info('using raw-video instead of jpeg-previews for gui')
+        use_previews = (Config.getboolean('previews', 'enabled') and
+                        Config.getboolean('previews', 'use'))
 
-		# Setup Server-Connection, Demuxing and Decoding
-		pipeline = """
-			tcpclientsrc host={host} port={port} blocksize=1048576 !
-			queue !
-			matroskademux name=demux
-		"""
+        # Preview-Ports are Raw-Ports + 1000
+        if use_previews:
+            self.log.info('using encoded previews instead of raw-video')
+            port += 1000
 
-		if use_previews:
-			pipeline += """
-				demux. !
-				image/jpeg !
-				jpegdec !
-				{previewcaps} !
-				queue !
-			"""
+            vdec = 'image/jpeg ! jpegdec'
+            if Config.has_option('previews', 'vaapi'):
+                try:
+                    decoder = Config.get('previews', 'vaapi')
+                    decoders = {
+                        'h264': 'video/x-h264 ! avdec_h264',
+                        'jpeg': 'image/jpeg ! jpegdec',
+                        'mpeg2': 'video/mpeg,mpegversion=2 ! mpeg2dec'
+                    }
+                    vdec = decoders[decoder]
+                except Exception as e:
+                    self.log.error(e)
 
-		else:
-			pipeline += """
-				demux. !
-				{vcaps} !
-				queue !
-			"""
+        else:
+            self.log.info('using raw-video instead of encoded-previews')
+            vdec = None
 
-		# Video Display
-		videosystem = Config.get('videodisplay', 'system')
-		self.log.debug('Configuring for Video-System %s', videosystem)
-		if videosystem == 'gl':
-			pipeline += """
-				glupload !
-				glcolorconvert !
-				glimagesinkelement
-			"""
+        # Setup Server-Connection, Demuxing and Decoding
+        pipeline = """
+            tcpclientsrc host={host} port={port} blocksize=1048576 !
+            queue !
+            matroskademux name=demux
+        """
 
-		elif videosystem == 'xv':
-			pipeline += """
-				xvimagesink
-			"""
+        if use_previews:
+            pipeline += """
+                demux. !
+                {vdec} !
+                {previewcaps} !
+                queue !
+            """
 
-		elif videosystem == 'x':
-			prescale_caps = 'video/x-raw'
-			if width and height:
-				prescale_caps += ',width=%u,height=%u' % (width, height)
+        else:
+            pipeline += """
+                demux. !
+                {vcaps} !
+                queue !
+            """
 
-			pipeline += """
-				videoconvert !
-				videoscale !
-				{prescale_caps} !
-				ximagesink
-			""".format(
-				prescale_caps=prescale_caps
-			)
+        # Video Display
+        videosystem = Config.get('videodisplay', 'system')
+        self.log.debug('Configuring for Video-System %s', videosystem)
+        if videosystem == 'gl':
+            pipeline += """
+                glupload !
+                glcolorconvert !
+                glimagesinkelement
+            """
 
-		else:
-			raise Exception('Invalid Videodisplay-System configured: %s' % videosystem)
+        elif videosystem == 'xv':
+            pipeline += """
+                xvimagesink
+            """
 
+        elif videosystem == 'x':
+            prescale_caps = 'video/x-raw'
+            if width and height:
+                prescale_caps += ',width=%u,height=%u' % (width, height)
 
+            pipeline += """
+                videoconvert !
+                videoscale !
+                {prescale_caps} !
+                ximagesink
+            """.format(prescale_caps=prescale_caps)
 
-		# If an Audio-Path is required, add an Audio-Path through a level-Element
-		if self.level_callback or play_audio:
-			pipeline += """
-				demux. !
-				{acaps} !
-				queue !
-				level name=lvl interval=50000000 !
-			"""
+        else:
+            raise Exception(
+                'Invalid Videodisplay-System configured: %s' % videosystem
+            )
 
-			# If Playback is requested, push fo pulseaudio
-			if play_audio:
-				pipeline += """
-					pulsesink
-				"""
+        # If an Audio-Path is required,
+        # add an Audio-Path through a level-Element
+        if self.level_callback or play_audio:
+            pipeline += """
+                demux. !
+                {acaps} !
+                queue !
+                level name=lvl interval=50000000 !
+            """
 
-			# Otherwise just trash the Audio
-			else:
-				pipeline += """
-					fakesink
-				"""
+            # If Playback is requested, push fo pulseaudio
+            if play_audio:
+                pipeline += """
+                    pulsesink
+                """
 
-		pipeline = pipeline.format(
-			acaps=Config.get('mix', 'audiocaps'),
-			vcaps=Config.get('mix', 'videocaps'),
-			previewcaps=Config.get('previews', 'videocaps'),
-			host=Config.get('server', 'host'),
-			port=port,
-		)
+            # Otherwise just trash the Audio
+            else:
+                pipeline += """
+                    fakesink
+                """
 
-		self.log.debug('Creating Display-Pipeline:\n%s', pipeline)
-		self.pipeline = Gst.parse_launch(pipeline)
-		self.pipeline.use_clock(Clock)
+        pipeline = pipeline.format(
+            acaps=Config.get('mix', 'audiocaps'),
+            vcaps=Config.get('mix', 'videocaps'),
+            previewcaps=previewcaps,
+            host=Args.host if Args.host else Config.get('server', 'host'),
+            vdec=vdec,
+            port=port,
+        )
 
-		self.drawing_area.realize()
-		self.xid = self.drawing_area.get_property('window').get_xid()
-		self.log.debug('Realized Drawing-Area with xid %u', self.xid)
+        self.log.debug('Creating Display-Pipeline:\n%s', pipeline)
+        self.pipeline = Gst.parse_launch(pipeline)
+        self.pipeline.use_clock(Clock)
 
-		bus = self.pipeline.get_bus()
-		bus.add_signal_watch()
-		bus.enable_sync_message_emission()
+        self.drawing_area.realize()
+        self.xid = self.drawing_area.get_property('window').get_xid()
+        self.log.debug('Realized Drawing-Area with xid %u', self.xid)
 
-		bus.connect('message::error', self.on_error)
-		bus.connect("sync-message::element", self.on_syncmsg)
+        bus = self.pipeline.get_bus()
+        bus.add_signal_watch()
+        bus.enable_sync_message_emission()
 
-		if self.level_callback:
-			bus.connect("message::element", self.on_level)
+        bus.connect('message::error', self.on_error)
+        bus.connect("sync-message::element", self.on_syncmsg)
 
-		self.log.debug('Launching Display-Pipeline')
-		self.pipeline.set_state(Gst.State.PLAYING)
+        if self.level_callback:
+            bus.connect("message::element", self.on_level)
 
+        self.log.debug('Launching Display-Pipeline')
+        self.pipeline.set_state(Gst.State.PLAYING)
 
-	def on_syncmsg(self, bus, msg):
-		if msg.get_structure().get_name() == "prepare-window-handle":
-				self.log.info('Setting imagesink window-handle to %s', self.xid)
-				msg.src.set_window_handle(self.xid)
+    def on_syncmsg(self, bus, msg):
+        if msg.get_structure().get_name() == "prepare-window-handle":
+            self.log.info('Setting imagesink window-handle to %s', self.xid)
+            msg.src.set_window_handle(self.xid)
 
-	def on_error(self, bus, message):
-		self.log.debug('Received Error-Signal on Display-Pipeline')
-		(error, debug) = message.parse_error()
-		self.log.debug('Error-Details: #%u: %s', error.code, debug)
+    def on_error(self, bus, message):
+        self.log.debug('Received Error-Signal on Display-Pipeline')
+        (error, debug) = message.parse_error()
+        self.log.debug('Error-Details: #%u: %s', error.code, debug)
 
+    def on_level(self, bus, msg):
+        if msg.src.name != 'lvl':
+            return
 
-	def on_level(self, bus, msg):
-		if msg.src.name != 'lvl':
-			return
+        if msg.type != Gst.MessageType.ELEMENT:
+            return
 
-		if msg.type != Gst.MessageType.ELEMENT:
-			return
-
-		rms = msg.get_structure().get_value('rms')
-		peak = msg.get_structure().get_value('peak')
-		decay = msg.get_structure().get_value('decay')
-		self.level_callback(rms, peak, decay)
+        rms = msg.get_structure().get_value('rms')
+        peak = msg.get_structure().get_value('peak')
+        decay = msg.get_structure().get_value('decay')
+        self.level_callback(rms, peak, decay)
