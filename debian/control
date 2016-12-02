@@ -3,7 +3,7 @@ Section: video
 Priority: optional
 Maintainer: Holger Levsen <holger@debian.org>
 Uploaders: Stefano Rivera <stefanor@debian.org>
-Build-Depends: debhelper (>=9), python3:any, dh-python, pandoc
+Build-Depends: debhelper (>=9), dh-python, pandoc, python3:any
 Standards-Version: 3.9.8
 Homepage: https://github.com/voc/voctomix
 Vcs-Git: https://anonscm.debian.org/git/collab-maint/voctomix.git
@@ -12,14 +12,14 @@ X-Python-Version: >= 3
 
 Package: voctomix
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends},
+Depends:
+ gstreamer1.0-tools,
  voctomix-core,
  voctomix-gui,
- gstreamer1.0-tools
-Suggests: python3-pyinotify,
- gstreamer1.0-libav,
- rlwrap,
- fbset
+ ${misc:Depends},
+ ${python3:Depends},
+ ${shlibs:Depends}
+Suggests: fbset, gstreamer1.0-libav, python3-pyinotify, rlwrap
 Description: Full-HD Software Live-Video-Mixer
  The Voctomix Project by the C3Voc (the Chaos Communication Congress' Video
  Operation Crew) is their software implementation of a Live-Video-Mixer.
@@ -38,15 +38,18 @@ Description: Full-HD Software Live-Video-Mixer
 
 Package: voctomix-core
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends},
- python3-gi,
- gir1.2-gstreamer-1.0,
+Depends:
  gir1.2-gst-plugins-base-1.0,
- libgstreamer1.0-0 (>=1.6.1~),
+ gir1.2-gstreamer-1.0,
  gstreamer1.0-plugins-bad,
  gstreamer1.0-plugins-base,
  gstreamer1.0-plugins-good,
- gstreamer1.0-plugins-ugly
+ gstreamer1.0-plugins-ugly,
+ libgstreamer1.0-0 (>=1.6.1~),
+ python3-gi,
+ ${misc:Depends},
+ ${python3:Depends},
+ ${shlibs:Depends}
 Description: Full-HD Software Live-Video-Mixer (Core)
  The Voctomix Project by the C3Voc (the Chaos Communication Congress' Video
  Operation Crew) is their software implementation of a Live-Video-Mixer.
@@ -56,19 +59,22 @@ Description: Full-HD Software Live-Video-Mixer (Core)
 
 Package: voctomix-gui
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends},
- python3-gi,
- python3-gi-cairo,
- gir1.2-gstreamer-1.0,
+Depends:
  gir1.2-gst-plugins-base-1.0,
+ gir1.2-gstreamer-1.0,
  gir1.2-gtk-3.0,
- libgstreamer1.0-0 (>=1.6.1~),
+ gstreamer1.0-alsa,
  gstreamer1.0-plugins-bad,
  gstreamer1.0-plugins-base,
  gstreamer1.0-plugins-good,
  gstreamer1.0-plugins-ugly,
- gstreamer1.0-alsa,
- gstreamer1.0-tools
+ gstreamer1.0-tools,
+ libgstreamer1.0-0 (>=1.6.1~),
+ python3-gi,
+ python3-gi-cairo,
+ ${misc:Depends},
+ ${python3:Depends},
+ ${shlibs:Depends}
 Suggests: gstreamer1.0-libav
 Description: Full-HD Software Live-Video-Mixer (GUI)
  The Voctomix Project by the C3Voc (the Chaos Communication Congress' Video
@@ -76,4 +82,3 @@ Description: Full-HD Software Live-Video-Mixer (GUI)
  .
  This package contains the GUI component, Voctogui, a GUI implementation in
  GTK controlling the core's functionality.
-
