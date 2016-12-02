@@ -1,7 +1,7 @@
 [Desktop Entry]
 GenericName=VoctoGUI
 Exec=/usr/bin/voctogui
-Icon=voctomix-gui
+Icon=voctogui
 Path=/usr/bin
 Type=Application
 Terminal=false
