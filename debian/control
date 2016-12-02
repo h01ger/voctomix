@@ -6,7 +6,7 @@ Uploaders: Stefano Rivera <stefanor@debian.org>
 Build-Depends: debhelper (>=9), python3:any, dh-python, pandoc
 Standards-Version: 3.9.8
 Homepage: https://github.com/voc/voctomix
-Vcs-Git: git://anonscm.debian.org/collab-maint/voctomix.git
+Vcs-Git: https://anonscm.debian.org/git/collab-maint/voctomix.git
 Vcs-Browser: https://anonscm.debian.org/git/collab-maint/voctomix.git
 X-Python-Version: >= 3
 
