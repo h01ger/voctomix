@@ -1,3 +1,11 @@
+voctomix (0.5.1-1) unstable; urgency=medium
+
+  * New upstream release featuring an example script showing
+    multi-variant-streaming used at 33c3 and a bugfix regarding leaked file
+    descriptors.
+
+ -- Holger Levsen <holger@debian.org>  Mon, 19 Dec 2016 00:35:24 +0100
+
 voctomix (0.5-2) unstable; urgency=medium
 
   [ Stefano Rivera ]
