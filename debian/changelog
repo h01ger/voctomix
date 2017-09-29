@@ -1,3 +1,11 @@
+voctomix (0.6-1) UNRELEASED; urgency=medium
+
+  * New upstream release with mostly bugfixes, but also a few new features.
+  * Adopt new-upstream-version target in debian/rules to deal with new
+    .dotfiles in source.
+
+ -- Holger Levsen <holger@debian.org>  Fri, 29 Sep 2017 15:18:34 +0200
+
 voctomix (0.5.1-1) unstable; urgency=medium
 
   * New upstream release featuring an example script showing
