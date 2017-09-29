@@ -12,7 +12,9 @@ UVER  = $(shell dpkg-parsechangelog -l$(PKD)/changelog | perl -ne 'print $$1 if 
 	dh $@ --with python3
 
 override_dh_auto_build:
-	pandoc -o voctomix.html README.md
+	# build and avoid https://lintian.debian.org/tags/privacy-breach-generic.html
+	grep -v "\[Build Status\]" README.md | pandoc -o voctomix.html
+	# just build these
 	pandoc -o voctocore.html voctocore/README.md
 	pandoc -o voctogui.html voctogui/README.md
 

@@ -1,8 +1,11 @@
 voctomix (0.6-1) UNRELEASED; urgency=medium
 
   * New upstream release with mostly bugfixes, but also a few new features.
-  * Adopt new-upstream-version target in debian/rules to deal with new
-    .dotfiles in source.
+  * debian/rules:
+    - remove privacy breaches in README.md as they are not useful in
+      voctomix.html in the package. (They are useful in the rendered README.md
+      on Github though.)
+    - Make new-upstream-version target deal with new .dotfiles in source.
   * Bump standards version to 4.1.1, no changes needed.
   * Bump debian/compat to 10 and build-depend on debhelper >= 10.2.5~.
 
