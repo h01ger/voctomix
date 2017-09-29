@@ -4,6 +4,7 @@ voctomix (0.6-1) UNRELEASED; urgency=medium
   * Adopt new-upstream-version target in debian/rules to deal with new
     .dotfiles in source.
   * Bump standards version to 4.1.1, no changes needed.
+  * Bump debian/compat to 10 and build-depend on debhelper >= 10.2.5~.
 
  -- Holger Levsen <holger@debian.org>  Fri, 29 Sep 2017 15:18:34 +0200
 
