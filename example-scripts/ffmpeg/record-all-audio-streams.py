@@ -34,6 +34,7 @@ server_config = json.loads(server_config_json)
 def getlist(self, section, option):
     return [x.strip() for x in self.get(section, option).split(',')]
 
+
 SafeConfigParser.getlist = getlist
 
 config = SafeConfigParser()
@@ -49,7 +50,7 @@ for idx, source in enumerate(sources):
 
 try:
     output = sys.argv[1]
-except:
+except IndexError:
     output = 'output.ts'
 
 
@@ -58,9 +59,13 @@ except:
 # ffmpeg
 #     -hide_banner
 #     -y -nostdin
-#     -i tcp://localhost:13000 -i tcp://localhost:13001 -i tcp://localhost:13002
+#     -i tcp://localhost:13000
+#     -i tcp://localhost:13001
+#     -i tcp://localhost:13002
 #     -ac 2 -channel_layout stereo
-#     -map 0:a -metadata:s:a:0 language=und -map 1:a -metadata:s:a:1 language=und -map 2:a -metadata:s:a:2 language=und
+#     -map 0:a -metadata:s:a:0 language=und
+#     -map 1:a -metadata:s:a:1 language=und
+#     -map 2:a -metadata:s:a:2 language=und
 #     -c:a mp2 -b:a 192k -ac:a 2 -ar:a 48000
 #     -flags +global_header -flags +ilme+ildct
 #     -f mpegts

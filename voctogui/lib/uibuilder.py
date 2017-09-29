@@ -1,12 +1,11 @@
-import gi
 import logging
-from gi.repository import Gtk, Gst
+from gi.repository import Gtk
 
 
 class UiBuilder(object):
 
     def __init__(self, uifile):
-        if not self.log:
+        if not hasattr(self, 'log'):
             self.log = logging.getLogger('UiBuilder')
 
         self.uifile = uifile

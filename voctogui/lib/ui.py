@@ -1,6 +1,5 @@
-import gi
 import logging
-from gi.repository import Gtk, Gst, Gdk, GLib
+from gi.repository import Gtk, Gdk
 
 from lib.config import Config
 from lib.uibuilder import UiBuilder
@@ -10,11 +9,12 @@ from lib.audioleveldisplay import AudioLevelDisplay
 from lib.warningoverlay import VideoWarningOverlay
 
 from lib.videopreviews import VideoPreviewsController
-from lib.audioselector import AudioSelectorController
 
 from lib.toolbar.composition import CompositionToolbarController
 from lib.toolbar.streamblank import StreamblankToolbarController
 from lib.toolbar.misc import MiscToolbarController
+
+from lib.shortcuts import show_shortcuts
 
 
 class Ui(UiBuilder):
@@ -51,23 +51,12 @@ class Ui(UiBuilder):
         )
 
         # Setup Preview Controller
-        drawing_area = self.find_widget_recursive(self.win, 'box_left')
+        box_left = self.find_widget_recursive(self.win, 'box_left')
         self.video_previews_controller = VideoPreviewsController(
-            drawing_area,
+            box_left,
             win=self.win,
             uibuilder=self
         )
-
-        # check if there is a fixed audio source configured.
-        # if so, remove the combo-box entirely instead of setting it up.
-        if Config.has_option('mix', 'audiosource'):
-            drawing_area.remove(self.find_widget_recursive(self.win, 'box_audio'))
-        else:
-            self.audio_selector_controller = AudioSelectorController(
-                drawing_area=self.find_widget_recursive(self.win, 'combo_audio'),
-                win=self.win,
-                uibuilder=self
-            )
 
         # Setup Toolbar Controllers
         toolbar = self.find_widget_recursive(self.win, 'toolbar')
@@ -89,6 +78,13 @@ class Ui(UiBuilder):
             win=self.win,
             uibuilder=self
         )
+
+        # Setup Shortcuts window
+        self.win.connect('key-press-event', self.handle_keypress)
+
+    def handle_keypress(self, window, event):
+        if event.keyval == Gdk.KEY_question:
+            show_shortcuts(window)
 
     def show(self):
         self.log.info('Showing Main-Window')
