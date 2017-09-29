@@ -1,4 +1,4 @@
-voctomix (0.6-1) UNRELEASED; urgency=medium
+voctomix (0.6-1) unstable; urgency=medium
 
   * New upstream release with mostly bugfixes, but also a few new features.
   * debian/rules:
@@ -9,7 +9,7 @@ voctomix (0.6-1) UNRELEASED; urgency=medium
   * Bump standards version to 4.1.1, no changes needed.
   * Bump debian/compat to 10 and build-depend on debhelper >= 10.2.5~.
 
- -- Holger Levsen <holger@debian.org>  Fri, 29 Sep 2017 15:18:34 +0200
+ -- Holger Levsen <holger@debian.org>  Fri, 29 Sep 2017 15:52:18 +0200
 
 voctomix (0.5.1-1) unstable; urgency=medium
 
