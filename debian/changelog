@@ -3,6 +3,7 @@ voctomix (0.6-1) UNRELEASED; urgency=medium
   * New upstream release with mostly bugfixes, but also a few new features.
   * Adopt new-upstream-version target in debian/rules to deal with new
     .dotfiles in source.
+  * Bump standards version to 4.1.1, no changes needed.
 
  -- Holger Levsen <holger@debian.org>  Fri, 29 Sep 2017 15:18:34 +0200
 
