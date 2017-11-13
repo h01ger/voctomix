@@ -27,7 +27,7 @@ Description: Full-HD Software Live-Video-Mixer
  It is written in Python using GStreamer and consists of three parts:
   - Voctocore, the videomixer core-process that does the actual video- and
     audio crunching.
-  - Voctogui, a GUI implementation in GTK controlling the core's functionality
+  - Voctogui, a GUI implementation in GTK+ controlling the core's functionality
     and giving visual feedback of the mixed video.
   - Voctomix Example Scripts, a collection of tools and examples for talking
     to the core-process, feeding and receiving video-streams and controlling
@@ -81,4 +81,4 @@ Description: Full-HD Software Live-Video-Mixer (GUI)
  Operation Crew) is their software implementation of a Live-Video-Mixer.
  .
  This package contains the GUI component, Voctogui, a GUI implementation in
- GTK controlling the core's functionality.
+ GTK+ controlling the core's functionality.
