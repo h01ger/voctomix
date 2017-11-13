@@ -1,10 +1,10 @@
-voctomix (1.0~RC1+git-1) UNRELEASED; urgency=medium
+voctomix (1.0~RC1+git-1) unstable; urgency=medium
 
   * New upstream release candidate, plus 2 upstream git commits on top.
   * Update package description to refer to GTK+ instead of GTK, thanks
     lintian.
 
- -- Holger Levsen <holger@debian.org>  Mon, 13 Nov 2017 17:04:23 +0000
+ -- Holger Levsen <holger@debian.org>  Mon, 13 Nov 2017 17:33:21 +0000
 
 voctomix (0.6-1) unstable; urgency=medium
 
