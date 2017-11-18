@@ -1,4 +1,4 @@
-voctomix (1.0~RC1+git-2) UNRELEASED; urgency=medium
+voctomix (1.0~RC1+git4-1) UNRELEASED; urgency=medium
 
   * New upstream release candidate, plus 4 upstream git commits on top.
     This time for real: 1.0~RC1+git-1 was actually just 0.6 with nothing on
