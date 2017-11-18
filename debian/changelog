@@ -1,3 +1,9 @@
+voctomix (1.0~RC1+git4-1~bpo9+1) stretch-backports; urgency=medium
+
+  * Rebuild for stretch-backports, no changes needed.
+
+ -- Holger Levsen <holger@debian.org>  Sat, 18 Nov 2017 19:04:22 +0000
+
 voctomix (1.0~RC1+git4-1) unstable; urgency=medium
 
   * New upstream release candidate, plus 4 upstream git commits on top.
