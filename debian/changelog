@@ -1,5 +1,7 @@
-voctomix (1.0~RC1+git4-2) UNRELEASED; urgency=medium
+voctomix (1.0+git4-1) UNRELEASED; urgency=medium
 
+  * Adopt version number to reflect the fact that 1.0~RC1 has been declared
+    1.0 afterwards.
   * Bump standards version to 4.1.2, no changes needed.
 
  -- Holger Levsen <holger@debian.org>  Sun, 03 Dec 2017 00:34:29 +0000
