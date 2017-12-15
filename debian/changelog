@@ -1,3 +1,9 @@
+voctomix (1.0+git4-1~bpo9+1) stretch-backports; urgency=medium
+
+  * Rebuild for stretch-backports.
+
+ -- Holger Levsen <holger@debian.org>  Fri, 15 Dec 2017 13:08:44 +0000
+
 voctomix (1.0+git4-1) unstable; urgency=medium
 
   * Adopt version number to reflect the fact that 1.0~RC1 has been declared
