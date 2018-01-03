@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Holger Levsen <holger@debian.org>
 Uploaders: Stefano Rivera <stefanor@debian.org>
 Build-Depends: debhelper (>=10.2.5~), dh-python, pandoc, python3:any
-Standards-Version: 4.1.2
+Standards-Version: 4.1.3
 Homepage: https://github.com/voc/voctomix
 Vcs-Git: https://anonscm.debian.org/git/collab-maint/voctomix.git
 Vcs-Browser: https://anonscm.debian.org/git/collab-maint/voctomix.git
