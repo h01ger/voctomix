@@ -3,6 +3,7 @@ voctomix (1.2-1) UNRELEASED; urgency=medium
   [ Holger Levsen ]
   * New upstream version.
   * Bump standards version to 4.1.4, no changes needed.
+  * Drop X-Python-Version header from debian/control. 
 
   [ Stefano Rivera ]
   * Migrate VCS to Salsa.
