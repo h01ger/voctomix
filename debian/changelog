@@ -1,4 +1,4 @@
-voctomix (1.2-1) UNRELEASED; urgency=medium
+voctomix (1.2-1) unstable; urgency=medium
 
   [ Holger Levsen ]
   * New upstream version.
@@ -8,7 +8,7 @@ voctomix (1.2-1) UNRELEASED; urgency=medium
   [ Stefano Rivera ]
   * Migrate VCS to Salsa.
 
- -- Holger Levsen <holger@debian.org>  Wed, 03 Jan 2018 11:31:02 +0000
+ -- Holger Levsen <holger@debian.org>  Sat, 12 May 2018 13:48:54 +0000
 
 voctomix (1.0+git4-1) unstable; urgency=medium
 
