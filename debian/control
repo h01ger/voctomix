@@ -6,7 +6,7 @@ Uploaders: Stefano Rivera <stefanor@debian.org>
 Build-Depends: debhelper (>=10), dh-python, pandoc, python3:any
 Standards-Version: 4.1.4
 Homepage: https://github.com/voc/voctomix
-Vcs-Git: https://salsa.debian.org/debian/voctomix.git
+Vcs-Git: https://salsa.debian.org/debian/voctomix
 Vcs-Browser: https://salsa.debian.org/debian/voctomix
 
 Package: voctomix
