@@ -1,3 +1,9 @@
+voctomix (1.2-2~bpo9+1) stretch-backports; urgency=medium
+
+  * Rebuild for stretch-backports.
+
+ -- Holger Levsen <holger@debian.org>  Wed, 06 Jun 2018 11:49:07 +0000
+
 voctomix (1.2-2) unstable; urgency=medium
 
   [ Stefano Rivera ]
