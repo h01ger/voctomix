@@ -1,3 +1,9 @@
+voctomix (1.2-3) UNRELEASED; urgency=medium
+
+  * Bump standards version to 4.1.5, no changes needed.
+
+ -- Holger Levsen <holger@debian.org>  Sun, 08 Jul 2018 13:31:26 +0000
+
 voctomix (1.2-2) unstable; urgency=medium
 
   [ Stefano Rivera ]
