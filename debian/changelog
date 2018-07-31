@@ -1,6 +1,7 @@
 voctomix (1.2-3) UNRELEASED; urgency=medium
 
   * Bump standards version to 4.1.5, no changes needed.
+  * Drop myself from uploaders, undank ist der Welt Lohn. Not amused. 
 
  -- Holger Levsen <holger@debian.org>  Sun, 08 Jul 2018 13:31:26 +0000
 

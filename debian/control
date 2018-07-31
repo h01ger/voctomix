@@ -1,8 +1,7 @@
 Source: voctomix
 Section: video
 Priority: optional
-Maintainer: Holger Levsen <holger@debian.org>
-Uploaders: Stefano Rivera <stefanor@debian.org>
+Maintainer: Stefano Rivera <stefanor@debian.org>
 Build-Depends: debhelper (>=10), dh-python, pandoc, python3:any
 Standards-Version: 4.1.5
 Homepage: https://github.com/voc/voctomix
