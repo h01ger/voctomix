@@ -1,6 +1,10 @@
 voctomix (1.2-3) UNRELEASED; urgency=medium
 
+  [ Holger Levsen ]
   * Bump standards version to 4.1.5, no changes needed.
+
+  [ Stefano Rivera ]
+  * Add a watch file.
 
  -- Holger Levsen <holger@debian.org>  Sun, 08 Jul 2018 13:31:26 +0000
 
