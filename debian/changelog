@@ -1,12 +1,12 @@
-voctomix (1.2-3) UNRELEASED; urgency=medium
-
-  [ Holger Levsen ]
-  * Bump standards version to 4.2.1, no changes needed.
+voctomix (1.2-3) unstable; urgency=medium
 
   [ Stefano Rivera ]
   * Add a watch file.
 
- -- Holger Levsen <holger@debian.org>  Sun, 08 Jul 2018 13:31:26 +0000
+  [ Holger Levsen ]
+  * Bump standards version to 4.2.1, no changes needed.
+
+ -- Holger Levsen <holger@debian.org>  Mon, 27 Aug 2018 12:44:46 +0200
 
 voctomix (1.2-2) unstable; urgency=medium
 
