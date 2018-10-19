@@ -1,6 +1,10 @@
 voctomix (1.2-4) UNRELEASED; urgency=medium
 
+  [ Ondřej Nový ]
   * d/changelog: Remove trailing whitespaces
+
+  [ Holger Levsen ]
+  * Bump debian/compat to 11 and build-depend on debhelper >= 11.
 
  -- Ondřej Nový <onovy@debian.org>  Mon, 01 Oct 2018 10:19:43 +0200
 
