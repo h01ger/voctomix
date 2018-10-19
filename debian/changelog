@@ -6,6 +6,7 @@ voctomix (1.2-4) UNRELEASED; urgency=medium
   [ Holger Levsen ]
   * Bump debian/compat to 11 and build-depend on debhelper >= 11.
   * Use the new debhelper-compat(=11) notation and drop d/compat.
+  * debian/voctogui.desktop: add a comment.
 
  -- Ondřej Nový <onovy@debian.org>  Mon, 01 Oct 2018 10:19:43 +0200
 

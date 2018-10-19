@@ -7,3 +7,4 @@ Type=Application
 Terminal=false
 Name=VoctoGUI
 Categories=AudioVideo;
+Comment=Voctomix graphical user interface
