@@ -1,14 +1,14 @@
-voctomix (1.2-4) UNRELEASED; urgency=medium
-
-  [ Ondřej Nový ]
-  * d/changelog: Remove trailing whitespaces
+voctomix (1.2-4) unstable; urgency=medium
 
   [ Holger Levsen ]
   * Bump debian/compat to 11 and build-depend on debhelper >= 11.
   * Use the new debhelper-compat(=11) notation and drop d/compat.
   * debian/voctogui.desktop: add a comment.
 
- -- Ondřej Nový <onovy@debian.org>  Mon, 01 Oct 2018 10:19:43 +0200
+  [ Ondřej Nový ]
+  * d/changelog: Remove trailing whitespaces.
+
+ -- Holger Levsen <holger@debian.org>  Fri, 19 Oct 2018 19:55:15 +0200
 
 voctomix (1.2-3) unstable; urgency=medium
 
