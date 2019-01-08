@@ -16,7 +16,7 @@ Install the required dependencies:
 apt-get install gstreamer1.0-plugins-bad gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-tools libgstreamer1.0-0 python3 python3-gi gir1.2-gstreamer-1.0 gir1.2-gst-plugins-base-1.0
 
 # Optional for the Example-Scripts
-apt-get install python3-pyinotify gstreamer1.0-libav rlwrap fbset
+apt-get install python3-pyinotify gstreamer1.0-libav rlwrap fbset ffmpeg netcat gstreamer1.0-vaapi
 ````
 
 
@@ -33,24 +33,34 @@ cd voctomix
 ./voctogui/voctogui.py -vv
 ````
 
-## Installation on Jessie
-Because we are using Debian Jessie as our production system (which only has [1.4 packaged](https://packages.debian.org/jessie/libgstreamer1.0-0)), we are packaging the required libraries in our own Debian repository. The packages inside this repository are built against deb-multimedia.org, so to use them you should add the following lines to your `/etc/apt/sources.list`:
-````
-deb http://www.deb-multimedia.org jessie main non-free
-deb http://c3voc.de/voctomix jessie non-free
-````
-
-You'll then need install the GPG keys:
-````
-apt-get update
-apt-get install deb-multimedia-keyring
-curl https://c3voc.de/voctomix/gpg-key.asc | apt-key add -
-apt-get update
-````
-
-Now proceed as described under [Installation](#installation).
-
 ## Quickstart using Docker
+
+### docker-compose
+
+Install docker-compose (prerequisite)
+```
+apt install docker-compose      # debian
+dnf install docker-compose      # fedora
+```
+
+Run the core, gui and two example source streams
+```
+xhost +local:$(id -un)
+mkdir /tmp/vocto/ && touch /tmp/vocto/configgui.ini
+GID=$(id -g) UID=$(id -u) docker-compose up
+```
+
+Run only the core
+```
+docker-compose up voctocore
+```
+
+Clean up stale containers
+```
+docker-compose rm
+```
+
+### Manually
 
 Run the core and two example source streams
 ```

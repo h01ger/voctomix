@@ -1,33 +1,57 @@
-import logging
 import math
+import cairo
+
+from lib.config import Config
+from gi.repository import Gtk, GLib, Gst
 
 
-class AudioLevelDisplay(object):
+class AudioLevelDisplay(Gtk.DrawingArea):
     """Displays a Level-Meter of another VideoDisplay into a GtkWidget"""
+    __gtype_name__ = 'AudioLevelDisplay'
 
-    def __init__(self, drawing_area):
-        self.log = logging.getLogger(
-            'AudioLevelDisplay[{}]'.format(drawing_area.get_name())
-        )
+    def __init__(self):
+        self.num_audiostreams_ = int(Config.get('mix', 'audiostreams'))
+        meters = Config.get('mainvideo', 'vumeter')
+        if (meters != 'all') and (int(meters) < self.num_audiostreams_):
+            self.num_audiostreams_ = int(meters)
 
-        self.drawing_area = drawing_area
+        self.channels = 2
+        acaps = Gst.Caps.from_string(Config.get('mix', 'audiocaps'))
+        self.channels = int(acaps.get_structure(0).get_int("channels")[1])
 
-        self.levelrms = []
-        self.levelpeak = []
-        self.leveldecay = []
+        self.levelrms = [0] * self.channels * self.num_audiostreams_
+        self.levelpeak = [0] * self.channels * self.num_audiostreams_
+        self.leveldecay = [0] * self.channels * self.num_audiostreams_
+
+        self.height = -1
+
+        self.set_size_request(20 * self.num_audiostreams_, -1)
 
         # register on_draw handler
-        self.drawing_area.connect('draw', self.on_draw)
+        self.connect('draw', self.draw_callback)
 
-    def on_draw(self, widget, cr):
+    # generate gradient from green to yellow to red in logarithmic scale
+    def gradient(self, brightness, darkness, height):
+        # prepare gradient
+        lg = cairo.LinearGradient(0, 0, 0, height)
+        # set gradient stops
+        lg.add_color_stop_rgb(0.0, brightness, darkness, darkness)
+        lg.add_color_stop_rgb(0.22, brightness, brightness, darkness)
+        lg.add_color_stop_rgb(0.25, brightness, brightness, darkness)
+        lg.add_color_stop_rgb(0.35, darkness, brightness, darkness)
+        lg.add_color_stop_rgb(1.0, darkness, brightness, darkness)
+        # return result
+        return lg
+
+    def draw_callback(self, widget, cr):
         # number of audio-channels
         channels = len(self.levelrms)
 
         if channels == 0:
             return False
 
-        width = self.drawing_area.get_allocated_width()
-        height = self.drawing_area.get_allocated_height()
+        width = self.get_allocated_width()
+        height = self.get_allocated_height()
 
         # space between the channels in px
         margin = 2
@@ -46,55 +70,49 @@ class AudioLevelDisplay(object):
         peak_px = [self.normalize_db(db) * height for db in self.levelpeak]
         decay_px = [self.normalize_db(db) * height for db in self.leveldecay]
 
-        # set the line-width >1, to get a nice overlap
-        cr.set_line_width(2)
+        if self.height != height:
+            self.height = height
+            # setup gradients for all level bars
+            self.bg_lg = self.gradient(0.25, 0.0, height)
+            self.rms_lg = self.gradient(1.0, 0.0, height)
+            self.peak_lg = self.gradient(0.75, 0.0, height)
+            self.decay_lg = self.gradient(1.0, 0.5, height)
 
-        # iterate over all pixels
-        for y in range(0, height):
+        # draw all level bars for all channels
+        for channel in range(0, channels):
+            # start-coordinate for this channel
+            x = (channel * channel_width) + (channel * margin)
 
-            # calculate our place in the color-gradient, clamp to 0…1
-            # 0 -> green, 0.5 -> yellow, 1 -> red
-            color = self.clamp(((y / height) - 0.6) / 0.42)
+            # draw background
+            cr.rectangle(x, 0, channel_width, height - peak_px[channel])
+            cr.set_source(self.bg_lg)
+            cr.fill()
 
-            for channel in range(0, channels):
-                # start-coordinate for this channel
-                x = (channel * channel_width) + (channel * margin)
+            # draw peak bar
+            cr.rectangle(
+                x, height - peak_px[channel], channel_width, peak_px[channel])
+            cr.set_source(self.peak_lg)
+            cr.fill()
 
-                # calculate the brightness based on whether this line is in the
-                # active region
+            # draw rms bar below
+            cr.rectangle(
+                x, height - rms_px[channel], channel_width,
+                rms_px[channel] - peak_px[channel])
+            cr.set_source(self.rms_lg)
+            cr.fill()
 
-                # default to 0.25, dark
-                bright = 0.25
-                if int(y - decay_px[channel]) in range(0, 2):
-                    # decay marker, 2px wide, extra bright
-                    bright = 1.5
-                elif y < rms_px[channel]:
-                    # rms bar, full bright
-                    bright = 1
-                elif y < peak_px[channel]:
-                    # peak bar, a little darker
-                    bright = 0.75
+            # draw decay bar
+            cr.rectangle(x, height - decay_px[channel], channel_width, 2)
+            cr.set_source(self.decay_lg)
+            cr.fill()
 
-                # set the color with a little reduced green
-                cr.set_source_rgb(
-                    color * bright,
-                    (1 - color) * bright * 0.75,
-                    0
-                )
-
-                # draw the marker
-                cr.move_to(x, height - y)
-                cr.line_to(x + channel_width, height - y)
-                cr.stroke()
-
-                # draw a black line for the margin
-                cr.set_source_rgb(0, 0, 0)
-                cr.move_to(x + channel_width, height - y)
-                cr.line_to(x + channel_width + margin, height - y)
-                cr.stroke()
+            # draw medium grey margin bar
+            if margin > 0:
+                cr.rectangle(x + channel_width, 0, margin, height)
+                cr.set_source_rgb(0.5, 0.5, 0.5)
+                cr.fill()
 
         # draw db text-markers
-        cr.set_source_rgb(1, 1, 1)
         for db in [-40, -20, -10, -5, -4, -3, -2, -1]:
             text = str(db)
             (xbearing, ybearing,
@@ -102,7 +120,11 @@ class AudioLevelDisplay(object):
              xadvance, yadvance) = cr.text_extents(text)
 
             y = self.normalize_db(db) * height
-            cr.move_to((width - textwidth) / 2, height - y - textheight)
+            if y > peak_px[channels - 1]:
+                cr.set_source_rgb(1, 1, 1)
+            else:
+                cr.set_source_rgb(0, 0, 0)
+            cr.move_to((width - textwidth) - 2, height - y - textheight)
             cr.show_text(text)
 
         return True
@@ -119,8 +141,10 @@ class AudioLevelDisplay(object):
     def clamp(self, value, min_value=0, max_value=1):
         return max(min(value, max_value), min_value)
 
-    def level_callback(self, rms, peak, decay):
-        self.levelrms = rms
-        self.levelpeak = peak
-        self.leveldecay = decay
-        self.drawing_area.queue_draw()
+    def level_callback(self, rms, peak, decay, stream):
+        meter_offset = self.channels * stream
+        for i in range(0, self.channels):
+            self.levelrms[meter_offset + i] = rms[i]
+            self.levelpeak[meter_offset + i] = peak[i]
+            self.leveldecay[meter_offset + i] = decay[i]
+        self.queue_draw()

@@ -34,6 +34,7 @@ Gtk.init([])
 
 # main class
 class Voctogui(object):
+
     def __init__(self):
         self.log = logging.getLogger('Voctogui')
         from lib.args import Args
@@ -68,6 +69,36 @@ class Voctogui(object):
             raise Exception("Can't find any .ui-Files to use "
                             "(searched {})".format(', '.join(paths)))
 
+        #
+        # search for a .css style sheet file and load it
+        #
+
+        css_provider = Gtk.CssProvider()
+        context = Gtk.StyleContext()
+
+        css_paths = [
+            os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                         'ui/voctogui.css'),
+            '/usr/lib/voctogui/ui/voctogui.css'
+        ]
+
+        for path in css_paths:
+            self.log.debug('trying to load css-file from file %s', path)
+
+            if os.path.isfile(path):
+                self.log.info('loading css-file from file %s', path)
+                css_provider.load_from_path(path)
+                break
+        else:
+            raise Exception("Can't find any .css-Files to use "
+                            "(searched {})".format(', '.join(css_paths)))
+
+        context.add_provider_for_screen(
+            Gdk.Screen.get_default(),
+            css_provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_USER
+        )
+
         self.ui.setup()
 
     def run(self):
@@ -93,8 +124,8 @@ def main():
     args.parse()
 
     from lib.args import Args
-    docolor = (Args.color == 'always') or (Args.color == 'auto' and
-                                           sys.stderr.isatty())
+    docolor = (Args.color == 'always') \
+        or (Args.color == 'auto' and sys.stderr.isatty())
 
     from lib.loghandler import LogHandler
     handler = LogHandler(docolor, Args.timestamp)
@@ -135,8 +166,8 @@ def main():
     # The list-comparison is not complete
     # (one could use a local hostname or the local system ip),
     # but it's only here to warn that one might be making a mistake
-    use_previews = (Config.getboolean('previews', 'enabled') and
-                    Config.getboolean('previews', 'use'))
+    use_previews = Config.getboolean('previews', 'enabled') \
+        and Config.getboolean('previews', 'use')
     looks_like_localhost = Config.get('server', 'host') in ['::1',
                                                             '127.0.0.1',
                                                             'localhost']

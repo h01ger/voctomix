@@ -16,6 +16,8 @@ from lib.toolbar.misc import MiscToolbarController
 
 from lib.shortcuts import show_shortcuts
 
+from lib.studioclock import StudioClock
+
 
 class Ui(UiBuilder):
 
@@ -29,13 +31,31 @@ class Ui(UiBuilder):
         # Aquire the Main-Window from the UI-File
         self.win = self.get_check_widget('window')
 
+        # check for configuration option mainwindow/force_fullscreen
+        if Config.getboolean('mainwindow', 'forcefullscreen', fallback=False):
+            self.log.info(
+                'Forcing main window to full screen by configuration')
+            # set window into fullscreen mode
+            self.win.fullscreen()
+        else:
+            # check for configuration option mainwindow/width and /height
+            if Config.has_option('mainwindow', 'width') \
+                    and Config.has_option('mainwindow', 'height'):
+                # get size from config
+                width = Config.getint('mainwindow', 'width')
+                height = Config.getint('mainwindow', 'height')
+                self.log.info(
+                    'Set window size by configuration to %d:%d', width, height)
+                # set window size
+                self.win.set_size_request(width, height)
+                self.win.set_resizable(False)
+
         # Connect Close-Handler
         self.win.connect('delete-event', Gtk.main_quit)
 
-        # Create Audio-Level Display
-        drawing_area = self.find_widget_recursive(self.win, 'audiolevel_main')
-        self.audio_level_display = AudioLevelDisplay(drawing_area)
-
+        # Get Audio-Level Display
+        self.audio_level_display = self.find_widget_recursive(
+            self.win, 'audiolevel_main')
         # Create Main-Video Overlay Controller
         drawing_area = self.find_widget_recursive(self.win,
                                                   'video_overlay_drawingarea')
@@ -81,10 +101,17 @@ class Ui(UiBuilder):
 
         # Setup Shortcuts window
         self.win.connect('key-press-event', self.handle_keypress)
+        self.win.connect('window-state-event', self.handle_state)
 
     def handle_keypress(self, window, event):
         if event.keyval == Gdk.KEY_question:
             show_shortcuts(window)
+
+    def handle_state(self, window, event):
+        # force full screen if whished by configuration
+        if Config.getboolean('mainwindow', 'forcefullscreen', fallback=False):
+            self.log.info('re-forcing fullscreen mode')
+            self.win.fullscreen()
 
     def show(self):
         self.log.info('Showing Main-Window')
