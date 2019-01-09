@@ -3,11 +3,6 @@
 # Uncomment this to turn on verbose mode.
 # #export DH_VERBOSE=1
 
-# used for new-upstream-version target only
-PKD   = $(word 1,$(abspath $(dir $(MAKEFILE_LIST))))
-PKG   = $(word 2,$(shell dpkg-parsechangelog -l$(PKD)/changelog | grep ^Source))
-UVER  = $(shell dpkg-parsechangelog -l$(PKD)/changelog | perl -ne 'print $$1 if m{^Version:\s+(?:\d+:)?(\d.*)(?:\-\d+.*)};')
-
 %:
 	dh $@ --with python3
 
@@ -25,9 +20,16 @@ override_dh_clean:
 	dh_clean
 	rm -f voctomix.html voctocore.html voctogui.html debian/debhelper-build-stamp
 
+include /usr/share/dpkg/pkg-info.mk
+
 new-upstream-version: clean
-	mkdir -p $(PKG)-$(UVER)/
-	rsync -av --delete --exclude=debian/ --exclude=$(PKG)-$(UVER)/ --exclude=.git . $(PKG)-$(UVER)/
-	find "$(PKG)-$(UVER)" -xdev \( -type f -o -type l \) -print| sort \
-	    | tar -cJaf "../$(PKG)_$(UVER).orig.tar.xz" -T- --owner=root --group=root --mode=a+rX \
-	    && $(RM) -r "$(PKG)-$(UVER)"
+	mkdir -p $(DEB_SOURCE)-$(DEB_VERSION_UPSTREAM)/
+	rsync -av --delete --exclude=debian/ \
+	    --exclude=$(DEB_SOURCE)-$(DEB_VERSION_UPSTREAM)/ \
+	    * $(DEB_SOURCE)-$(DEB_VERSION_UPSTREAM)/
+	find "$(DEB_SOURCE)-$(DEB_VERSION_UPSTREAM)" \
+	    -xdev \( -type f -o -type l \) -print \
+	    | sort \
+	    | tar -cJaf "../$(DEB_SOURCE)_$(DEB_VERSION_UPSTREAM).orig.tar.xz" \
+	    -T- --owner=root --group=root --mode=a+rX
+	rm -r "$(DEB_SOURCE)-$(DEB_VERSION_UPSTREAM)"
